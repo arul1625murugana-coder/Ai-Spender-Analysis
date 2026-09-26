@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 💰 SmartSpend AI — Smart Expense Tracker with AI Analysis
 
 A complete full-stack expense management web application built with **Flask, SQLite,
@@ -218,3 +219,6 @@ No frontend frameworks (React/Angular/Vue) are used, per the project requirement
 =======
 # Smart-Expence-Tracker
 >>>>>>> e836dd8cfe04ebaa70693eee0309e272ff0230c6
+=======
+# Ai-Spender-Analysis
+>>>>>>> 396066e924807d33794c4df67d47db4f5c57a49d
