@@ -1,86 +1,105 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # 💰 SmartSpend AI — Smart Expense Tracker with AI Analysis
 
-A complete full-stack expense management web application built with **Flask, SQLite,
-vanilla JavaScript and Chart.js**. Designed as a polished, professional final-year
-college project.
+A complete full-stack expense management web application built with **Flask, SQLite, Vanilla JavaScript, and Chart.js**. Designed as a polished and professional final-year college project.
 
 ---
 
 ## 1. Features
 
-- First-run salary setup screen that becomes your starting balance
-- Live dashboard with 7 summary cards (salary, spending, balance, today/week/month, transactions)
-- Add / edit / delete expenses with category, reason, payment method, date & time, notes
-- Expense History page with search, category/payment/date filters
-- Spending Analysis page: category pie, payment pie, daily bar, trend line, income vs expense
-- AI Spending Analysis page: dynamic, rule-based insights computed live from your data
-  (nothing is hard-coded)
-- Analysis Report page: a professional, printable summary report
-- One-click Excel export (3 sheets: Expense Details, Summary, Category Analysis) with a
-  category pie chart embedded in the workbook
-- Built-in calculator (accessible from the dashboard and sidebar on every page)
-- Light / dark mode toggle, responsive sidebar + top navigation, mobile-friendly layout
+* First-run salary setup screen that becomes your starting balance
+* Live dashboard with summary cards for salary, spending, balance, today, week, month, and transactions
+* Add, edit, and delete expenses
+* Expense fields include category, reason, payment method, date, time, and notes
+* Expense History page with search, category, payment, and date filters
+* Spending Analysis page with:
+
+  * Category pie chart
+  * Payment method pie chart
+  * Daily spending bar chart
+  * Spending trend line
+  * Income vs expense chart
+* AI Spending Analysis page with dynamic rule-based insights
+* Analysis Report page with a professional printable summary
+* One-click Excel export
+* Excel report contains:
+
+  * Expense Details
+  * Summary
+  * Category Analysis
+  * Category pie chart
+* Built-in calculator
+* Light and dark mode
+* Responsive sidebar and top navigation
+* Mobile-friendly interface
 
 ---
 
 ## 2. Project Structure
 
-```
+```text
 SmartExpenseTracker/
 │
-├── app.py                     # Flask application (routes, DB, AI engine, Excel export)
+├── app.py
 ├── requirements.txt
 ├── README.md
 │
 ├── database/
-│   └── expenses.db            # Auto-created on first run (not included in the repo)
+│   └── expenses.db
 │
 ├── templates/
-│   ├── index.html              # Dashboard + first-run salary setup
-│   ├── expenses.html           # Expense History
-│   ├── analysis.html           # Spending Analysis
-│   ├── ai_analysis.html        # AI Spending Analysis
-│   ├── report.html             # Analysis Report
-│   ├── _sidebar.html           # Shared sidebar partial
-│   ├── _topbar.html            # Shared top bar partial
-│   └── _modals.html            # Shared calculator modal + toast partial
+│   ├── index.html
+│   ├── expenses.html
+│   ├── analysis.html
+│   ├── ai_analysis.html
+│   ├── report.html
+│   ├── _sidebar.html
+│   ├── _topbar.html
+│   └── _modals.html
 │
 ├── static/
 │   ├── css/
-│   │   └── style.css          # All application styling (light + dark themes)
+│   │   └── style.css
 │   │
 │   └── js/
-│       ├── app-common.js      # Shared helpers: fetch wrapper, formatting, theme, sidebar
-│       ├── calculator.js       # Calculator logic
-│       ├── dashboard.js        # Dashboard + salary setup + Add Expense
-│       ├── expenses.js         # Expense History: filters, edit, delete
-│       ├── analysis.js         # Spending Analysis charts
-│       ├── ai_analysis.js      # AI insight rendering
-│       └── report.js           # Analysis Report rendering
+│       ├── app-common.js
+│       ├── calculator.js
+│       ├── dashboard.js
+│       ├── expenses.js
+│       ├── analysis.js
+│       ├── ai_analysis.js
+│       └── report.js
 │
-└── exports/                    # Generated Excel files are cached here as a backup copy
+└── exports/
+    └── Generated Excel reports
 ```
 
 ---
 
-## 3. Setup Instructions (VS Code)
+## 3. Setup Instructions
 
-### Step 1 — Open the project
+### Step 1 — Clone or open the project
 
-Open the `SmartExpenseTracker` folder in VS Code (`File → Open Folder…`).
+Open the `SmartExpenseTracker` folder in VS Code.
 
-### Step 2 — Create a virtual environment (recommended)
+### Step 2 — Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate it:
+Activate the environment.
 
-- **Windows:** `venv\Scripts\activate`
-- **macOS / Linux:** `source venv/bin/activate`
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**macOS / Linux:**
+
+```bash
+source venv/bin/activate
+```
 
 ### Step 3 — Install dependencies
 
@@ -94,130 +113,251 @@ pip install -r requirements.txt
 python app.py
 ```
 
-The console will show:
+The application will normally run at:
 
+```text
+http://127.0.0.1:5000
 ```
-Running on http://127.0.0.1:5000
+
+Open the address in your browser.
+
+The SQLite database is created automatically when the application starts.
+
+### Step 5 — First Run
+
+On the first run, the application displays the **Welcome to Smart Expense Tracker** screen.
+
+Enter your monthly salary and click **Get Started**.
+
+The salary becomes the starting balance and you are taken to the dashboard.
+
+---
+
+## 4. Frontend and Backend Connection
+
+Flask serves the HTML pages from the `templates` directory using `render_template()`.
+
+Static CSS and JavaScript files are loaded from the `static` directory using Flask's `url_for()`.
+
+The JavaScript frontend communicates with the Flask backend through JSON APIs.
+
+Example expense flow:
+
+```text
+Add Expense Form
+       ↓
+JavaScript
+       ↓
+POST /api/expenses
+       ↓
+Flask Backend
+       ↓
+SQLite Database
+       ↓
+Dashboard Data
+       ↓
+Charts and Summary Cards
 ```
 
-Open that address in your browser. The SQLite database (`database/expenses.db`) is
-created automatically the first time the app runs — there is nothing to set up manually.
+The same API-based approach is used for:
 
-### Step 5 — First run
-
-You'll see the **Welcome to Smart Expense Tracker** screen. Enter your monthly salary
-(e.g. `50000`) and click **Get Started**. This becomes your starting balance, and you're
-taken straight to the dashboard.
-
----
-
-## 4. How the Frontend Connects to the Backend
-
-- Flask serves HTML pages from `templates/` using `render_template()`.
-- Every page loads its CSS from `static/css/style.css` and its JS from `static/js/*.js`,
-  both wired through Flask's `url_for('static', filename=...)` so paths never break.
-- The JavaScript files never touch the database directly — they call **JSON APIs** under
-  `/api/...` using the browser's `fetch()` API (wrapped in a small `apiRequest()` helper
-  in `app-common.js`).
-- Example flow for adding an expense: the Add Expense form in `dashboard.js` /
-  `expenses.js` collects the form fields → `POST /api/expenses` with a JSON body →
-  Flask validates and inserts a row into SQLite → the frontend then re-fetches
-  `/api/dashboard` so every summary card and chart updates immediately with the new totals.
-- The same pattern is used for editing, deleting, filtering, chart data, AI insights, and
-  the report page — everything you see on screen is fetched live from SQLite through Flask,
-  never hard-coded in the HTML.
+* Adding expenses
+* Editing expenses
+* Deleting expenses
+* Filtering expenses
+* Dashboard statistics
+* Spending analysis
+* AI analysis
+* Reports
+* Excel export
 
 ---
 
-## 5. How SQLite Works Here
+## 5. SQLite Database
 
-- On startup, `init_db()` in `app.py` creates two tables if they don't already exist:
-  - `settings` — stores the monthly salary history (the most recent row is the active salary)
-  - `expenses` — stores every expense record (amount, category, reason, payment method,
-    date, time, notes, created_at)
-- Flask opens a fresh SQLite connection per request (`get_db()`), and closes it
-  automatically when the request ends (`teardown_appcontext`).
-- All dashboard numbers (spending totals, balances, averages, category breakdowns) are
-  computed **on the fly** from the rows currently in the `expenses` table using Pandas —
-  nothing is cached or hard-coded, so adding, editing or deleting an expense immediately
-  changes every number across the app.
+The application uses SQLite for data storage.
 
----
+The database contains tables for:
 
-## 6. How Excel Download Works
+### `settings`
 
-- Clicking **Download Excel Report** (on the dashboard, sidebar, or Analysis Report page)
-  calls `GET /api/export-excel`.
-- The backend reads the current data from SQLite, builds a workbook in memory with
-  **openpyxl**, and writes three sheets:
-  1. **Expense Details** — every transaction, one row per expense
-  2. **Summary** — salary, totals, balance, averages, highest category, transaction count
-  3. **Category Analysis** — category totals and percentage of total spending, plus an
-     embedded pie chart
-- The workbook is streamed back to the browser as a file download
-  (`SmartSpend_Report_YYYYMMDD_HHMMSS.xlsx`) using Flask's `send_file()`, and a backup
-  copy is also saved under `exports/`.
+Stores salary information and application settings.
+
+### `expenses`
+
+Stores expense records including:
+
+* Amount
+* Category
+* Reason
+* Payment method
+* Date
+* Time
+* Notes
+* Created date
+
+The database is automatically created if it does not exist.
 
 ---
 
-## 7. How AI Analysis Works
+## 6. Excel Report
 
-The "AI Spending Analysis" page uses a **rule-based analysis engine**
-(`generate_ai_insights()` in `app.py`) that reads your real expense data through Pandas
-and produces plain-English insights, for example:
+The application provides an **Excel Report Download** feature.
 
-- Highest and lowest spending category, and what share of total spending the top
-  category represents
-- Most frequently used category (by transaction count, not just amount)
-- The single highest-spending day
-- Average daily and weekly spending, calculated from the actual date range of your data
-- Most-used payment method
-- Week-over-week spending trend (increase / decrease / stable)
-- Statistical outlier detection for unusually large transactions
-  (amount > mean + 2×standard deviation)
-- A discretionary-spending check (Entertainment, Shopping, Recharge, Other) that flags
-  potential unnecessary spending when it exceeds 25% of your total
-- A budgeting suggestion when one category consumes more than 30% of your salary
+The backend uses **Pandas** and **OpenPyXL** to generate the Excel file.
 
-Every sentence is generated dynamically from whatever is currently in your database —
-add, edit or delete an expense and the insights change immediately on refresh. No
-insight text or number is hard-coded.
+The report contains three sheets:
+
+### Expense Details
+
+Contains individual expense transactions.
+
+### Summary
+
+Contains:
+
+* Salary
+* Total spending
+* Balance
+* Average spending
+* Highest spending category
+* Transaction count
+
+### Category Analysis
+
+Contains:
+
+* Category
+* Total spending
+* Percentage of total spending
+* Category pie chart
+
+The generated report is downloaded as an Excel file.
+
+---
+
+## 7. AI Spending Analysis
+
+The **AI Spending Analysis** page uses a rule-based analysis engine to analyze the user's real expense data.
+
+The analysis can identify:
+
+* Highest spending category
+* Lowest spending category
+* Percentage of spending by category
+* Most frequently used category
+* Highest spending day
+* Average daily spending
+* Average weekly spending
+* Most-used payment method
+* Week-over-week spending trend
+* Unusually large transactions
+* Potential discretionary spending
+* Categories consuming a large percentage of salary
+* Budgeting suggestions
+
+The analysis is generated dynamically from the data stored in the SQLite database.
+
+Therefore, when expenses are added, edited, or deleted, the analysis can change based on the updated data.
 
 ---
 
 ## 8. Validation Rules
 
-- Amount must be a number greater than zero (rejects negative and zero values)
-- Category must be one of the 12 supported categories
-- Payment method must be one of the 6 supported methods
-- Spending reason, date, and time are required fields
-- Dates must be valid `YYYY-MM-DD` values
-- All database errors are caught and returned as friendly JSON error messages instead of
-  crashing the server
+The application validates expense data before storing it.
+
+* Amount must be greater than zero
+* Category must be valid
+* Payment method must be valid
+* Spending reason is required
+* Date is required
+* Time is required
+* Dates must use the `YYYY-MM-DD` format
+* Database errors are handled and returned as user-friendly messages
 
 ---
 
-## 9. Tech Stack Summary
+## 9. Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | HTML5, CSS3, Vanilla JavaScript, Chart.js |
-| Backend | Python, Flask |
-| Database | SQLite |
-| Excel Export | Pandas, OpenPyXL |
+| Layer         | Technology                      |
+| ------------- | ------------------------------- |
+| Frontend      | HTML5, CSS3, Vanilla JavaScript |
+| Charts        | Chart.js                        |
+| Backend       | Python, Flask                   |
+| Database      | SQLite                          |
+| Data Analysis | Pandas                          |
+| Excel Export  | OpenPyXL                        |
+| Deployment    | Render                          |
 
-No frontend frameworks (React/Angular/Vue) are used, per the project requirements.
+No frontend frameworks such as React, Angular, or Vue are required.
 
 ---
 
-## 10. Notes
+## 10. Reset the Application
 
-- The `database/` and `exports/` folders are created automatically if missing — you do
-  not need to create `expenses.db` yourself.
-- To reset the app completely (start over with a new salary), stop the server and delete
-  `database/expenses.db`, then restart with `python app.py`.
-=======
+To completely reset the application and start with a new salary:
 
-=======
-# Ai-Spender-Analysis
->>>>>>> 396066e924807d33794c4df67d47db4f5c57a49d
+1. Stop the Flask server.
+2. Delete the database file:
+
+```text
+database/expenses.db
+```
+
+3. Start the application again:
+
+```bash
+python app.py
+```
+
+The application will create a new database automatically.
+
+---
+
+## 11. GitHub
+
+The project is maintained using Git and GitHub.
+
+To push future changes:
+
+```bash
+git add .
+git commit -m "Update project"
+git push
+```
+
+---
+
+## 12. Deployment
+
+The application can be deployed using Render.
+
+Recommended Render settings:
+
+**Build Command**
+
+```bash
+pip install -r requirements.txt
+```
+
+**Start Command**
+
+```bash
+gunicorn app:app
+```
+
+Make sure `gunicorn` is included in `requirements.txt`.
+
+---
+
+## 13. Project Purpose
+
+SmartSpend AI is designed to help users:
+
+* Track daily expenses
+* Understand spending patterns
+* Analyze monthly spending
+* Identify major spending categories
+* Generate AI-based spending insights
+* Download financial reports
+* Improve personal budgeting decisions
