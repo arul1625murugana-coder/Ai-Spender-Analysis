@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analysis Report | SmartSpend AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+  {% with active='report' %}{% include "_sidebar.html" %}{% endwith %}
+
+  <div class="main-area">
+    {% with page_title='Analysis Report', page_subtitle='Professional summary report of your financial activity' %}
+      {% include "_topbar.html" %}
+    {% endwith %}
+
+    <main class="content">
+      <div id="pageAlert" class="alert alert-error"></div>
+
+      <div class="card" id="reportCard">
+        <div class="report-header">
+          <div class="brand-logo" style="width:56px;height:56px;font-size:26px;">💰</div>
+          <h2 style="font-size:20px; font-weight:800;">SmartSpend AI</h2>
+          <p style="color:var(--text-muted); font-size:13px;">Smart Expense Tracker with AI Analysis — Analysis Report</p>
+          <p style="color:var(--text-muted); font-size:12px; margin-top:6px;" id="reportGeneratedAt"></p>
+        </div>
+
+        <div class="report-grid">
+          <div class="kv-row"><span class="k">Monthly Salary</span><span class="v" id="rSalary">₹0</span></div>
+          <div class="kv-row"><span class="k">Total Expenses</span><span class="v" id="rTotalExpenses">₹0</span></div>
+          <div class="kv-row"><span class="k">Remaining Balance</span><span class="v" id="rBalance">₹0</span></div>
+          <div class="kv-row"><span class="k">Today's Spending</span><span class="v" id="rToday">₹0</span></div>
+          <div class="kv-row"><span class="k">Weekly Spending</span><span class="v" id="rWeekly">₹0</span></div>
+          <div class="kv-row"><span class="k">Monthly Spending</span><span class="v" id="rMonthly">₹0</span></div>
+          <div class="kv-row"><span class="k">Daily Average</span><span class="v" id="rDailyAvg">₹0</span></div>
+          <div class="kv-row"><span class="k">Weekly Average</span><span class="v" id="rWeeklyAvg">₹0</span></div>
+          <div class="kv-row"><span class="k">Highest Spending Category</span><span class="v" id="rHighestCat">N/A</span></div>
+          <div class="kv-row"><span class="k">Highest Spending Amount</span><span class="v" id="rHighestAmt">₹0</span></div>
+          <div class="kv-row"><span class="k">Most-Used Payment Method</span><span class="v" id="rPaymentMethod">N/A</span></div>
+          <div class="kv-row"><span class="k">Number of Transactions</span><span class="v" id="rTransactions">0</span></div>
+        </div>
+
+        <h3 class="report-section-title">Category Breakdown</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Category</th><th>Total Amount</th><th>% of Total</th></tr></thead>
+            <tbody id="reportCategoryBody"></tbody>
+          </table>
+        </div>
+
+        <h3 class="report-section-title">AI Insights Summary</h3>
+        <div class="insight-list" id="reportInsightList"></div>
+
+        <div class="form-actions" style="margin-top:26px;">
+          <button class="btn btn-primary" id="downloadExcelBtn">⬇️ Download Excel Report</button>
+          <button class="btn btn-outline" id="printReportBtn">🖨️ Print Report</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+{% include "_modals.html" %}
+
+<script src="{{ url_for('static', filename='js/app-common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

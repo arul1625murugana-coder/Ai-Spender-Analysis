@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Spending Analysis | SmartSpend AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+  {% with active='ai' %}{% include "_sidebar.html" %}{% endwith %}
+
+  <div class="main-area">
+    {% with page_title='AI Spending Analysis', page_subtitle='Dynamic insights generated from your real expense data' %}
+      {% include "_topbar.html" %}
+    {% endwith %}
+
+    <main class="content">
+      <div id="pageAlert" class="alert alert-error"></div>
+
+      <div class="card" style="margin-bottom:20px; background:linear-gradient(135deg, var(--primary), var(--accent)); color:#fff; border:none;">
+        <h3 style="font-size:16px; margin-bottom:6px;">🤖 SmartSpend AI Engine</h3>
+        <p style="font-size:13px; opacity:0.9;">These insights are generated dynamically by analyzing every transaction stored in your database. Nothing here is hard-coded.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title-row"><h3>Your Personalized Insights</h3><button class="btn btn-outline btn-sm" id="refreshInsightsBtn">🔄 Refresh</button></div>
+        <div class="insight-list" id="insightList">
+          <div class="empty-state"><div class="emoji">🤖</div><p>Loading AI insights...</p></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+{% include "_modals.html" %}
+
+<script src="{{ url_for('static', filename='js/app-common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ai_analysis.js') }}"></script>
+</body>
+</html>

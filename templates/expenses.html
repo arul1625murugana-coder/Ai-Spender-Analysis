@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense History | SmartSpend AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+  {% with active='expenses' %}{% include "_sidebar.html" %}{% endwith %}
+
+  <div class="main-area">
+    {% with page_title='Expense History', page_subtitle='Search, filter, edit and delete your expenses' %}
+      {% include "_topbar.html" %}
+    {% endwith %}
+
+    <main class="content">
+      <div id="pageAlert" class="alert alert-error"></div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title-row">
+          <h3>All Expenses</h3>
+          <button class="btn btn-primary btn-sm" id="addExpenseBtn">➕ Add Expense</button>
+        </div>
+
+        <div class="filters-row">
+          <input type="text" id="searchInput" placeholder="🔍 Search by reason...">
+          <select id="categoryFilter"><option value="">All Categories</option></select>
+          <select id="paymentFilter"><option value="">All Payment Methods</option></select>
+          <input type="date" id="dateFilter">
+          <button class="btn btn-outline btn-sm" id="clearFiltersBtn">Clear Filters</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th><th>Time</th><th>Amount</th><th>Category</th>
+                <th>Reason</th><th>Payment Method</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="expenseTableBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="emoji">🧾</div>
+            <p>No expenses found. Try adjusting filters or add a new expense.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Add/Edit Expense Modal -->
+<div class="modal-overlay" id="expenseModalOverlay">
+  <div class="modal-box wide">
+    <div class="modal-close-row"><button id="expenseModalCloseBtn">✕</button></div>
+    <h3 id="expenseModalTitle" style="margin-bottom:16px;">➕ Add Expense</h3>
+    <div id="expenseFormAlert" class="alert alert-error"></div>
+    <form id="expenseForm">
+      <input type="hidden" id="editExpenseId">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="expAmount" step="0.01" min="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="expCategory" required><option value="">Select category</option></select>
+        </div>
+        <div class="form-group">
+          <label>Spending Reason</label>
+          <input type="text" id="expReason" placeholder="e.g. Lunch" required>
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="expPaymentMethod" required><option value="">Select method</option></select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="expDate" required>
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time" id="expTime" required>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:16px;">
+        <label>Notes (optional)</label>
+        <textarea id="expNotes" placeholder="Any additional details..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Expense</button>
+        <button type="button" class="btn btn-outline" id="expenseCancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="deleteModalOverlay">
+  <div class="modal-box">
+    <h3 style="margin-bottom:10px;">Delete Expense?</h3>
+    <p style="color:var(--text-muted); font-size:13.5px; margin-bottom:20px;">This action cannot be undone. Dashboard totals will update automatically.</p>
+    <div class="form-actions">
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      <button class="btn btn-outline" id="cancelDeleteBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+{% include "_modals.html" %}
+
+<script src="{{ url_for('static', filename='js/app-common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+<script src="{{ url_for('static', filename='js/expenses.js') }}"></script>
+</body>
+</html>

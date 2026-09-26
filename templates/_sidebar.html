@@ -1,0 +1,20 @@
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-logo">💰</div>
+    <div class="brand-text">
+      <div class="brand-name">SmartSpend AI</div>
+      <div class="brand-sub">Expense Tracker</div>
+    </div>
+  </div>
+  <ul class="nav-list">
+    <li><a href="/" class="nav-item {{ 'active' if active=='dashboard' else '' }}"><span class="icon">🏠</span> Dashboard</a></li>
+    <li><a href="/expenses" class="nav-item {{ 'active' if active=='expenses' else '' }}"><span class="icon">🧾</span> Expense History</a></li>
+    <li><a href="/analysis" class="nav-item {{ 'active' if active=='analysis' else '' }}"><span class="icon">📊</span> Spending Analysis</a></li>
+    <li><a href="/ai-analysis" class="nav-item {{ 'active' if active=='ai' else '' }}"><span class="icon">🤖</span> AI Analysis</a></li>
+    <li><a href="/report" class="nav-item {{ 'active' if active=='report' else '' }}"><span class="icon">📄</span> Analysis Report</a></li>
+    <li><a href="#" class="nav-item" id="sidebarCalcBtn"><span class="icon">🧮</span> Calculator</a></li>
+    <li><a href="#" class="nav-item" id="sidebarExcelBtn"><span class="icon">⬇️</span> Download Excel</a></li>
+  </ul>
+  <div class="sidebar-footer">SmartSpend AI &copy; 2026<br>Final Year Project</div>
+</aside>

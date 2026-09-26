@@ -1,0 +1,37 @@
+<!-- Calculator Modal -->
+<div class="modal-overlay" id="calcModalOverlay">
+  <div class="modal-box">
+    <div class="modal-close-row"><button id="calcCloseBtn">✕</button></div>
+    <h3 style="margin-bottom:16px;">🧮 Calculator</h3>
+    <div class="calculator">
+      <div class="calc-display" id="calcDisplay">0</div>
+      <div class="calc-grid">
+        <button class="calc-btn clear" data-action="clear">C</button>
+        <button class="calc-btn" data-action="delete">⌫</button>
+        <button class="calc-btn op" data-value="%">%</button>
+        <button class="calc-btn op" data-value="/">÷</button>
+
+        <button class="calc-btn" data-value="7">7</button>
+        <button class="calc-btn" data-value="8">8</button>
+        <button class="calc-btn" data-value="9">9</button>
+        <button class="calc-btn op" data-value="*">×</button>
+
+        <button class="calc-btn" data-value="4">4</button>
+        <button class="calc-btn" data-value="5">5</button>
+        <button class="calc-btn" data-value="6">6</button>
+        <button class="calc-btn op" data-value="-">−</button>
+
+        <button class="calc-btn" data-value="1">1</button>
+        <button class="calc-btn" data-value="2">2</button>
+        <button class="calc-btn" data-value="3">3</button>
+        <button class="calc-btn op" data-value="+">+</button>
+
+        <button class="calc-btn span-2" data-value="0">0</button>
+        <button class="calc-btn" data-value=".">.</button>
+        <button class="calc-btn equals" data-action="equals">=</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>

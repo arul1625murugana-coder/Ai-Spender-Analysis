@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | SmartSpend AI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ============ Welcome / Salary Setup Screen ============ -->
+<div class="welcome-screen" id="welcomeScreen" style="display:none;">
+  <div class="welcome-card">
+    <div class="brand-logo">💰</div>
+    <h1>Welcome to Smart Expense Tracker</h1>
+    <p class="tagline">SmartSpend AI needs your monthly salary to set up your dashboard and track your remaining balance.</p>
+    <div id="welcomeAlert" class="alert alert-error"></div>
+    <div class="form-group">
+      <label for="salaryInput">Monthly Salary (₹)</label>
+      <input type="number" id="salaryInput" placeholder="e.g. 50000" min="1" step="0.01">
+    </div>
+    <button class="btn btn-primary" id="saveSalaryBtn">Get Started 🚀</button>
+  </div>
+</div>
+
+<!-- ============ Main App Shell ============ -->
+<div class="app-shell" id="appShell" style="display:none;">
+  {% with active='dashboard' %}{% include "_sidebar.html" %}{% endwith %}
+
+  <div class="main-area">
+    {% with page_title='Dashboard', page_subtitle='Your complete financial overview at a glance' %}
+      {% include "_topbar.html" %}
+    {% endwith %}
+
+    <main class="content">
+      <div id="dashboardAlert" class="alert alert-error"></div>
+
+      <!-- Summary cards -->
+      <div class="summary-grid" id="summaryGrid">
+        <!-- populated by dashboard.js -->
+      </div>
+
+      <!-- Quick actions -->
+      <h3 style="margin-bottom:14px; font-size:15px;">Quick Actions</h3>
+      <div class="quick-actions">
+        <button class="quick-btn" id="qaAddExpense"><span class="qa-icon">➕</span> Add Expense</button>
+        <a href="/expenses" class="quick-btn"><span class="qa-icon">🧾</span> View History</a>
+        <a href="/analysis" class="quick-btn"><span class="qa-icon">📊</span> Spending Analysis</a>
+        <a href="/ai-analysis" class="quick-btn"><span class="qa-icon">🤖</span> AI Analysis</a>
+        <a href="/report" class="quick-btn"><span class="qa-icon">📄</span> Analysis Report</a>
+        <button class="quick-btn" id="qaCalculator"><span class="qa-icon">🧮</span> Calculator</button>
+        <button class="quick-btn" id="qaExcel"><span class="qa-icon">⬇️</span> Download Excel</button>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="card">
+          <div class="card-title-row"><h3>Spending Trend (Last 14 Days)</h3></div>
+          <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><h3>Weekly Spending</h3></div>
+          <div class="chart-wrap"><canvas id="weeklyChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="charts-grid-3">
+        <div class="card">
+          <div class="card-title-row"><h3>Monthly Spending (6 Months)</h3></div>
+          <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ Add Expense Modal ============ -->
+<div class="modal-overlay" id="expenseModalOverlay">
+  <div class="modal-box wide">
+    <div class="modal-close-row"><button id="expenseModalCloseBtn">✕</button></div>
+    <h3 style="margin-bottom:16px;">➕ Add Expense</h3>
+    <div id="expenseFormAlert" class="alert alert-error"></div>
+    <form id="expenseForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="expAmount" step="0.01" min="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="expCategory" required>
+            <option value="">Select category</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Spending Reason</label>
+          <input type="text" id="expReason" placeholder="e.g. Lunch" required>
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="expPaymentMethod" required>
+            <option value="">Select method</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="expDate" required>
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time" id="expTime" required>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:16px;">
+        <label>Notes (optional)</label>
+        <textarea id="expNotes" placeholder="Any additional details..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Expense</button>
+        <button type="button" class="btn btn-outline" id="expenseCancelBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include "_modals.html" %}
+
+<script src="{{ url_for('static', filename='js/app-common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
